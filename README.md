@@ -2,8 +2,10 @@
 
 ## Steps to run locally after cloning the repo:
 
-`npm install`
-`npm run start`
+```
+  npm install
+  npm run start
+```
 
 ## Live link here:
 
