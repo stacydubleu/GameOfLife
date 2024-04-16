@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { produce } from 'immer';
+import Grid from './components/Grid';
 import './styles.scss';
 
 export default function GameOfLife() {
-  const [inputRow, setInputRow] = useState(25);
-  const [inputCol, setInputCol] = useState(25);
+  const [cssRows, setCssRows] = useState(25);
   const [row, setRow] = useState(25);
   const [col, setCol] = useState(25);
   const [grid, setGrid] = useState(() =>
@@ -24,32 +24,11 @@ export default function GameOfLife() {
     );
   };
 
-  // output grid onto DOM
-  const visualizeGrid = () => {
-    return grid.map((rows, i) =>
-      rows.map((val, j) => (
-        <div
-          key={`${i} ${j}`}
-          onClick={() => toggleCell(i, j)}
-          style={{
-            width: '20px',
-            height: '20px',
-            border: 'solid 1px black',
-            backgroundColor: `${val ? 'black' : 'white'}`,
-          }}
-        />
-      ))
-    );
-  };
-
   // customize grid dimensions
   const updateDimensions = () => {
-    setRow(inputRow);
-    setCol(inputCol);
+    setCssRows(row);
     setGrid(() =>
-      Array.from({ length: inputRow }, () =>
-        Array.from({ length: inputCol }, () => 0)
-      )
+      Array.from({ length: row }, () => Array.from({ length: col }, () => 0))
     );
   };
 
@@ -149,18 +128,14 @@ export default function GameOfLife() {
   const handleRowChange = e => {
     const newRow = parseInt(e.target.value);
     if (Number.isInteger(newRow) && newRow > 0 && newRow <= 100) {
-      setInputRow(newRow);
-    } else {
-      alert('Please enter a valid number greater than 0');
+      setRow(newRow);
     }
   };
 
   const handleColChange = e => {
     const newCol = parseInt(e.target.value);
     if (Number.isInteger(newCol) && newCol > 0 && newCol <= 100) {
-      setInputCol(newCol);
-    } else {
-      alert('Please enter a valid number greater than 0');
+      setCol(newCol);
     }
   };
 
@@ -168,8 +143,6 @@ export default function GameOfLife() {
     const newSpeed = parseInt(e.target.value);
     if (Number.isInteger(newSpeed)) {
       setInputSpeed(newSpeed);
-    } else {
-      alert('Please enter a valid number greater than 0');
     }
   };
 
@@ -179,15 +152,7 @@ export default function GameOfLife() {
       style={{ width: 'fit-content', margin: '0 auto', textAlign: 'center' }}
     >
       <h1>Game of Life</h1>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${row}, 20px)`,
-        }}
-        className='grid'
-      >
-        {visualizeGrid()}
-      </div>
+      <Grid grid={grid} toggleCell={toggleCell} cssRows={cssRows} />
       <div className='enter-dimensions-container'>
         <input
           type='number'
