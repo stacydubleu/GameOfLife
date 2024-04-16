@@ -37,6 +37,7 @@ export default function GameOfLife() {
   };
 
   const randomPopulate = () => {
+    setGeneration(0);
     setGrid(prevGrid =>
       produce(prevGrid, newGrid => {
         for (let x = 0; x < row; x++) {
@@ -49,6 +50,7 @@ export default function GameOfLife() {
   };
 
   const clear = () => {
+    setGeneration(0);
     setGrid(prevGrid =>
       produce(prevGrid, newGrid => {
         for (let x = 0; x < row; x++) {
@@ -170,6 +172,7 @@ export default function GameOfLife() {
         />
         <button onClick={updateDimensions}>submit</button>
       </div>
+      <div className='generation'>Generation: {generation}</div>
       <div className='running-container'>
         <input
           type='number'
