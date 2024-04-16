@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, 'build'), // change this
+    path: path.resolve(__dirname, 'dist'), // change this
     publicPath: '/',
     filename: 'bundle.js',
   },
